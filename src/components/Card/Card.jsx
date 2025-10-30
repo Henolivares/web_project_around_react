@@ -8,19 +8,24 @@ export default function Card({
   isLiked,
   _id,
   handleOpenImagePopup,
-  handleLikeCard
+  handleCardLike,
+  handleCardDelete
 }) {
   const handleImageClick = () => {
     handleOpenImagePopup(link, name)
   }
 
   const handleLikeClick = () => {
-    handleLikeCard(_id)
+    handleCardLike(isLiked, _id)
+  }
+
+  const handleDeleteClick = () => {
+    handleCardDelete(_id)
   }
 
   return (
     <article className="gallery__card">
-      <button className="gallery__button gallery__button_delete">
+      <button className="gallery__button gallery__button_delete" onClick={handleDeleteClick}>
         <img src={trashIcon} alt="delete icon" className="gallery__icon" />
       </button>
       <img

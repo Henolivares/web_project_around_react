@@ -1,6 +1,23 @@
+import { useRef, useContext } from 'react'
+import CurrentUserContext from '../../contexts/CurrentUserContext'
+
 export default function EditAvatar() {
+  const avatarRef = useRef(null)
+  const { handleUpdateAvatar } = useContext(CurrentUserContext)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    handleUpdateAvatar({ avatar: avatarRef.current.value })
+  }
+
   return (
-    <form action="#" className="form" id="form-change-avatar" novalidate>
+    <form
+      action="#"
+      className="form"
+      id="form-change-avatar"
+      novalidate
+      onSubmit={handleSubmit}
+    >
       <div className="form__field">
         <input
           type="url"
@@ -8,8 +25,8 @@ export default function EditAvatar() {
           placeholder="Enlace a la imagen"
           id="avatar-link"
           name="avatar"
-          value=""
           required
+          ref={avatarRef}
         />
         <p className="form__error"></p>
       </div>

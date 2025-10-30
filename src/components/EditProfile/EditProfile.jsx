@@ -1,6 +1,27 @@
+import { useContext, useState } from "react"
+import CurrentUserContext from "../../contexts/CurrentUserContext"
+
 export default function EditProfile() {
+  const {currentUser, handleUpdateUser} = useContext(CurrentUserContext)
+
+  const [name, setName] = useState(currentUser.name)
+  const [about, setAbout] = useState(currentUser.about)
+
+  const handleNameChange = (e) => {
+    setName(e.target.value)
+  }
+
+  const handleAboutChange = (e) => {
+    setAbout(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    handleUpdateUser({ name, about })
+  }
+
   return (
-    <form action="#" className="form" id="form-profile" novalidate>
+    <form action="#" className="form" id="form-profile" novalidate onSubmit={handleSubmit}>
       <div className="form__field">
         <input
           type="text"
@@ -11,6 +32,8 @@ export default function EditProfile() {
           minlength="2"
           maxlength="40"
           required
+          value={name}
+          onChange={handleNameChange}
         />
         <p className="form__error"></p>
       </div>
@@ -24,6 +47,8 @@ export default function EditProfile() {
           minlength="2"
           maxlength="200"
           required
+          value={about}
+          onChange={handleAboutChange}
         />
         <p className="form__error"></p>
       </div>

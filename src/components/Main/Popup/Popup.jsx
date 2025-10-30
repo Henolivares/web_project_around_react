@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import closeIcon from '../../../images/CloseIcon.svg'
 
-export default function Popup({ title, reference, children }) {
-  const handleClosePopup = () => {
-    reference.current.close()
-  }
-
+export default function Popup({
+  title,
+  reference,
+  handleClosePopup,
+  children
+}) {
   useEffect(() => {
     const popup = reference.current
 
