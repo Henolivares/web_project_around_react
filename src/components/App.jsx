@@ -69,7 +69,7 @@ function App() {
 
   return (
     <>
-      <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
+      <CurrentUserContext.Provider value={{ currentUser }}>
         <div className="page">
           <Header />
           <div className="error-messages">
