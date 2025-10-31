@@ -1,13 +1,11 @@
-import { useRef, useContext } from 'react'
-import CurrentUserContext from '../../contexts/CurrentUserContext'
+import { useRef } from 'react'
 
-export default function EditAvatar() {
+export default function EditAvatar({ onUpdateAvatar }) {
   const avatarRef = useRef(null)
-  const { handleUpdateAvatar } = useContext(CurrentUserContext)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    handleUpdateAvatar({ avatar: avatarRef.current.value })
+    onUpdateAvatar({ avatar: avatarRef.current.value })
   }
 
   return (

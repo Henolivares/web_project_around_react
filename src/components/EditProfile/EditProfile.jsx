@@ -1,8 +1,8 @@
-import { useContext, useState } from "react"
-import CurrentUserContext from "../../contexts/CurrentUserContext"
+import { useContext, useState } from 'react'
+import CurrentUserContext from '../../contexts/CurrentUserContext'
 
-export default function EditProfile() {
-  const {currentUser, handleUpdateUser} = useContext(CurrentUserContext)
+export default function EditProfile({ onUpdateUser }) {
+  const { currentUser } = useContext(CurrentUserContext)
 
   const [name, setName] = useState(currentUser.name)
   const [about, setAbout] = useState(currentUser.about)
@@ -17,11 +17,17 @@ export default function EditProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    handleUpdateUser({ name, about })
+    onUpdateUser({ name, about })
   }
 
   return (
-    <form action="#" className="form" id="form-profile" novalidate onSubmit={handleSubmit}>
+    <form
+      action="#"
+      className="form"
+      id="form-profile"
+      novalidate
+      onSubmit={handleSubmit}
+    >
       <div className="form__field">
         <input
           type="text"

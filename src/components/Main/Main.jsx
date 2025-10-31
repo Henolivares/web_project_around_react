@@ -4,20 +4,29 @@ import plusIcon from '../../images/plusIcon.svg'
 
 import Card from '../Card/Card'
 import ImagePopup from '../ImagePopup/ImagePopup'
+import Popup from './Popup/Popup'
+import NewCard from '../NewCard/NewCard'
+import EditProfile from '../EditProfile/EditProfile'
+import EditAvatar from '../EditAvatar/EditAvatar'
 import CurrentUserContext from '../../contexts/CurrentUserContext'
 
 export default function Main({
-  handleSetPopup,
   cards,
   onCardLike,
-  onCardDelete
+  onCardDelete,
+  onAddPlaceSubmit,
+  onUpdateUser,
+  onUpdateAvatar
 }) {
   const imagePopupRef = useRef(null)
+  const popupRef = useRef(null)
 
   const [imageData, setImageData] = useState({
     imageUrl: '',
     imageDescription: ''
   })
+
+  const [popup, setPopup] = useState({ modal: 'newCard', title: 'Nuevo lugar' })
 
   const { currentUser } = useContext(CurrentUserContext)
 
@@ -26,8 +35,51 @@ export default function Main({
     imagePopupRef.current.showModal()
   }
 
+  const handleSetPopup = (popupName) => {
+    setPopup(popupName)
+    handleOpenPopup()
+  }
+
+  const handleOpenPopup = () => {
+    popupRef.current.showModal()
+  }
+
+  const handleClosePopup = () => {
+    popupRef.current.close()
+  }
+
+  const handleAddPlaceSubmit = async (data) => {
+    await onAddPlaceSubmit(data)
+    handleClosePopup()
+  }
+
+  const handleUpdateUser = async (data) => {
+    await onUpdateUser(data)
+    handleClosePopup()
+  }
+
+  const handleUpdateAvatar = async (data) => {
+    await onUpdateAvatar(data)
+    handleClosePopup()
+  }
+
   return (
     <main className="content">
+      <Popup
+        title={popup.title}
+        reference={popupRef}
+        handleClosePopup={handleClosePopup}
+      >
+        {popup.modal === 'newCard' && (
+          <NewCard onAddPlaceSubmit={handleAddPlaceSubmit} />
+        )}
+        {popup.modal === 'editAvatar' && (
+          <EditAvatar onUpdateAvatar={handleUpdateAvatar} />
+        )}
+        {popup.modal === 'editProfile' && (
+          <EditProfile onUpdateUser={handleUpdateUser} />
+        )}
+      </Popup>
       <section className="profile">
         <button
           className="profile__image-container"
